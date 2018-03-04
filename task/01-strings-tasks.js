@@ -55,7 +55,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-    throw new Error('Not implemented');
+    return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -69,7 +69,9 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-    throw new Error('Not implemented');
+    value = value.slice(7);
+    value = value.replace("!", "");
+    return value;
 }
 
 
@@ -84,7 +86,7 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
-    throw new Error('Not implemented');
+    return value[0];
 }
 
 /**
@@ -99,7 +101,7 @@ function getFirstChar(value) {
  *   '\tHello, World! ' => 'Hello, World!'
  */
 function removeLeadingAndTrailingWhitespaces(value) {
-    throw new Error('Not implemented');
+    return value.trim();
 }
 
 /**
@@ -114,7 +116,7 @@ function removeLeadingAndTrailingWhitespaces(value) {
  *   'cat', 3 => 'catcatcat'
  */
 function repeatString(value, count) {
-    throw new Error('Not implemented');
+    return value.repeat(count);
 }
 
 /**
@@ -130,7 +132,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    throw new Error('Not implemented');
+    return str.replace(value, "");
 }
 
 /**
@@ -145,7 +147,9 @@ function removeFirstOccurrences(str, value) {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-    throw new Error('Not implemented');
+    str=str.replace("<", "");
+    str=str.replace(">", "");
+    return str;
 }
 
 
@@ -160,7 +164,7 @@ function unbracketTag(str) {
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
 function convertToUpperCase(str) {
-    throw new Error('Not implemented');
+    return str.toUpperCase();
 }
 
 /**
@@ -174,7 +178,8 @@ function convertToUpperCase(str) {
  *   'info@gmail.com' => ['info@gmail.com']
  */
 function extractEmails(str) {
-    throw new Error('Not implemented');
+    var array = str.split(";");
+    return array;
 }
 
 /**
@@ -201,7 +206,24 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-    throw new Error('Not implemented');
+    function typeraw(corner1, mid, corner2)
+    {
+        str=str.concat(corner1);
+
+        for (var i = 0; i < width - 2; i++)
+            str=str.concat(mid);
+        
+        str=str.concat(corner2, "\n");
+    }
+    var str = "";
+    
+    typeraw("┌", "─", "┐");
+    
+    for (var i = 0; i < height - 2; i++)
+        typeraw("│", " ", "│");
+    
+    typeraw("└", "─", "┘");
+    return str;
 }
 
 
@@ -221,9 +243,43 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    throw new Error('Not implemented');
+    var alph = "abcdefghijklmnopqrstuvwxyz";
+    var ALPH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var pos;
+    for (var i = 0; i < str.length; i++)
+                 
+        //pos = alph.search(str.charAt(i)); не сработало: нет рег. выраж \ \       
+        
+       // if (pos == -1)
+        if ((str.charCodeAt(i) > 64) && (str.charCodeAt(i) < 91))
+        {
+            pos = ALPH.search(str.charAt(i));
+           // if (pos != -1)
+           // {
+            
+            if (pos - 13 < 0)
+                pos += 13;
+            else
+                pos -= 13; 
+                
+            str = str.replace(str.charAt(i), ALPH.charAt(pos));
+           // }
+        }
+        else
+            if ((str.charCodeAt(i) > 96) && (str.charCodeAt(i) < 123))
+            {
+                pos = alph.search(str.charAt(i));
+                
+                if (pos - 13 < 0)
+                    pos += 13;
+                else
+                    pos -= 13; 
+            
+                str = str.replace(str.charAt(i), alph.charAt(pos));
+            }
+    
+    return str;
 }
-
 /**
  * Возвращает булевое значение, является ли входной параметр строкой
  * @param {string} value
@@ -238,7 +294,11 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    throw new Error('Not implemented');
+    var result;
+    if (isString(value))
+        result = "true";
+    else
+        result = "false";
 }
 
 
@@ -267,7 +327,21 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-    throw new Error('Not implemented');
+    var type = ["♣", "♦", "♥", "♠"];
+    var card = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+    var ed, des, id;
+    if (value.length == 2)
+    {
+        des = type.indexOf(value[1]);
+        ed = card.indexOf(value[0]);
+    }
+    else
+    {
+        des = type.indexOf(value[2]);
+        ed = card.indexOf(value[0].concat(value[1]));    
+    }
+    id = des*13 + ed; 
+    return id; 
 }
 
 
