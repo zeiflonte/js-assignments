@@ -294,11 +294,7 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    var result;
-    if (isString(value))
-        result = "true";
-    else
-        result = "false";
+    return ({}.toString.call(value).slice(8,-1).toUpperCase() == "string".toUpperCase());
 }
 
 
