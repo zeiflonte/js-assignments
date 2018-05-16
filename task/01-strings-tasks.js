@@ -243,42 +243,23 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    var alph = "abcdefghijklmnopqrstuvwxyz";
-    var ALPH = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var pos;
-    for (var i = 0; i < str.length; i++)
-                 
-        //pos = alph.search(str.charAt(i)); не сработало: нет рег. выраж \ \       
-        
-       // if (pos == -1)
-        if ((str.charCodeAt(i) > 64) && (str.charCodeAt(i) < 91))
+    var cipher = "";
+    for (var i = 0; i < str.length; i++) 
+    {
+        if ((str.charCodeAt(i) > 64 && str.charCodeAt(i) < 78) || (str.charCodeAt(i) > 96 && str.charCodeAt(i) < 110)) 
         {
-            pos = ALPH.search(str.charAt(i));
-           // if (pos != -1)
-           // {
-            
-            if (pos - 13 < 0)
-                pos += 13;
-            else
-                pos -= 13; 
-                
-            str = str.replace(str.charAt(i), ALPH.charAt(pos));
-           // }
+            cipher += String.fromCharCode(str.charCodeAt(i) + 13);
+        }
+        else if ((str.charCodeAt(i) > 77 && str.charCodeAt(i) < 91) || (str.charCodeAt(i) > 109 && str.charCodeAt(i) < 123)) 
+        {
+            cipher += String.fromCharCode(str.charCodeAt(i) - 13);
         }
         else
-            if ((str.charCodeAt(i) > 96) && (str.charCodeAt(i) < 123))
-            {
-                pos = alph.search(str.charAt(i));
-                
-                if (pos - 13 < 0)
-                    pos += 13;
-                else
-                    pos -= 13; 
-            
-                str = str.replace(str.charAt(i), alph.charAt(pos));
-            }
-    
-    return str;
+        {
+            cipher += str[i];
+        }
+    }    
+    return cipher;
 }
 /**
  * Возвращает булевое значение, является ли входной параметр строкой
